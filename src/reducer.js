@@ -1,6 +1,7 @@
 const init_state = {
   table_data: {},
   filter: 'all',
+  user: null,
 };
 export const actionTypes = {
   SET_DATA: 'SET_DATA',

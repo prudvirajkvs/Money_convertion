@@ -29,6 +29,7 @@ function Login() {
       .signInWithEmailAndPassword(user_name, password)
       .then((result) => {
         console.log(result);
+        localStorage.setItem('user', JSON.stringify(result));
         store.dispatch({
           type: actionTypes.SET_USER,
           user: result.user,
@@ -43,6 +44,7 @@ function Login() {
       .signInWithPopup(provider)
       .then((result) => {
         console.log(result);
+        localStorage.setItem('user', JSON.stringify(result));
         store.dispatch({
           type: actionTypes.SET_USER,
           user: result.user,
@@ -57,14 +59,17 @@ function Login() {
       .createUserWithEmailAndPassword(reg_user, reg_pass)
       .then((dt) => {
         handleClose();
-        alert('user creation success');
+        alert('user creation success please login with the registered details');
       })
       .catch((e) => alert(e.message));
   };
   const forgot_pass = () => {
     auth
       .sendPasswordResetEmail(forgot_email)
-      .then((dt) => alert('passord reset link sent to email'))
+      .then((dt) => {
+        alert('passord reset link sent to email');
+        handleClose_forgot();
+      })
       .catch((e) => alert(e.message));
   };
   return (
@@ -111,7 +116,7 @@ function Login() {
         <Modal.Body>
           <form>
             <div className="form-group m-2">
-              <label htmlFor="username">User Name</label>
+              <label htmlFor="username">User Email</label>
               <input
                 id="username"
                 className="form-control"
@@ -165,7 +170,7 @@ function Login() {
             Close
           </Button>
           <Button variant="primary" onClick={forgot_pass}>
-            Register User
+            Reset Password
           </Button>
         </Modal.Footer>
       </Modal>
